@@ -41,3 +41,42 @@ jobs:
     - name: Analysing the code with pylint
       run: |
         poetry run black ./
+
+  unittest:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10"]
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python3 -m pip install --upgrade poetry
+        poetry install --with dev
+    - name: Analysing the code with pylint
+      run: |
+        poetry run python3 -m unittest
+
+  coverage:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10"]
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python3 -m pip install --upgrade poetry
+        poetry install --with dev
+    - name: Analysing the code with pylint
+      run: |
+        poetry run coverage run --source . -m unittest
+	    poetry run coverage report -m --fail-under 80
