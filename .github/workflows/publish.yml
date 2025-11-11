@@ -143,4 +143,4 @@ jobs:
         git add pyproject.toml
         git commit -m "Bump version [skip ci]."
         git push origin HEAD:${GITHUB_REF_NAME}
-
+        poetry publish
