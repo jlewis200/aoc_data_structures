@@ -4,6 +4,7 @@ on: [push]
 
 jobs:
   pylint:
+    runs-on: ubuntu-latest
     steps:
     - uses: ./.github/workflows/setup_environment.yml
     - name: pylint
