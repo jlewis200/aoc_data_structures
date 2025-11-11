@@ -4,6 +4,7 @@ on: [push]
 
 jobs:
   pylint:
+    steps:
     - uses: ./.github/workflows/setup_environment.yml
     - name: pylint
       run: |
