@@ -1,23 +1,10 @@
-name: Pylint
+name: validate
 
 on: [push]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        python-version: ["3.10"]
-    steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v3
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
-      run: |
-        python3 -m pip install --upgrade poetry
-        poetry install --with dev
-    - name: Analysing the code with pylint
+  pylint:
+    - uses: ./.github/workflows/setup_environment.yml
+    - name: pylint
       run: |
         poetry run pylint --fail-under 9.5 ./
