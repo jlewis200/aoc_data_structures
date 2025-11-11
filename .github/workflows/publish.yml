@@ -117,6 +117,9 @@ jobs:
 
   publish:
     runs-on: ubuntu-latest
+    permissions:
+      # IMPORTANT: this permission is mandatory for Trusted Publishing
+      id-token: write
     needs:
     - package
     strategy:
@@ -144,3 +147,4 @@ jobs:
         git commit -m "Bump version [skip ci]."
         git push origin HEAD:${GITHUB_REF_NAME}
         poetry publish
+
