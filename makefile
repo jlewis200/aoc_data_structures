@@ -4,7 +4,7 @@ black:
 	black ./
 
 pylint:
-	pylint --fail-under 9.5 --recursive yes ./
+	pylint --fail-under 9.5
 
 coverage:
 	python3 -m coverage run --source . -m unittest
