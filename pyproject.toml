@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "aoc-utils"
-version = "0.0.0"
+name = "aoc-data-structures"
+version = "0.0.1"
 description = ""
 authors = ["Justin <18606523+jlewis200@users.noreply.github.com>"]
 exclude = ["**/test*"]
