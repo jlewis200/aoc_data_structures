@@ -117,9 +117,9 @@ jobs:
 
   publish:
     runs-on: ubuntu-latest
-    permissions:
-      # IMPORTANT: this permission is mandatory for Trusted Publishing
-      id-token: write
+    # permissions:
+    #   # IMPORTANT: this permission is mandatory for Trusted Publishing
+    #   id-token: write
     needs:
     - package
     strategy:
