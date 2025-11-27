@@ -1,3 +1,7 @@
+"""
+A collection of helpers for common grid-based AOC challenges.
+"""
+
 import numpy as np
 
 
@@ -22,6 +26,25 @@ def expand_grid(grid, expansion_size=2):
 
 
 def parse(lines):
+    """
+    Parse a list of strings representing a grid.  Return as a 2-D numpy array.
+
+    ex input:
+    [
+        "####",
+        "# ##",
+        "## #",
+        "####",
+    ]
+
+    returns:
+    [
+        ["#", "#", "#", "#"],
+        ["#", " ", "#", "#"],
+        ["#", "#", " ", "#"],
+        ["#", "#", "#", "#"],
+    ]
+    """
     grid = []
 
     for line in lines:
@@ -39,4 +62,7 @@ def grid_str(grid):
 
 
 def hash_array(array):
+    """
+    Produce a hash based on current contents of a grid/array.
+    """
     return hash("".join(array.flatten()))
