@@ -44,6 +44,9 @@ class VectorTuple(tuple):
             for self_element, other_element in zip(self, other)
         )
 
+    def __abs__(self):
+        return VectorTuple((abs(element) for element in self))
+
     def within_range(self, *ranges):
         """
         Return true if all elements of the VectorTuple are within the provided ranges.
