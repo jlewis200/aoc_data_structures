@@ -77,3 +77,29 @@ class VectorTuple(tuple):
             next_pos = self + delta
             if next_pos.within_range(range(board.shape[0]), range(board.shape[1])):
                 yield next_pos
+
+    def radius(self, board, size):
+        """
+        Generate coordinates within a manhattan radius.
+        """
+        for dx, dy in product(range(-size, size + 1), repeat=2):
+            delta = VectorTuple(dy, dx)
+            adjacency = self + delta
+
+            if (
+                delta == VectorTuple(0, 0)
+                or delta.manhattan() > size
+                or not adjacency.within_range(
+                    range(board.shape[0]),
+                    range(board.shape[1]),
+                )
+            ):
+                continue
+
+            yield adjacency
+
+    def manhattan(self):
+        """
+        Get manhattan magnitude of self.
+        """
+        return sum(abs(self))
