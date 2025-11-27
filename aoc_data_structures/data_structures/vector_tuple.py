@@ -50,7 +50,7 @@ class VectorTuple(tuple):
         """
         return all(element in range_ for element, range_ in zip(self, ranges))
 
-    def orthogonals(self, board):
+    def orthogonals(self, grid):
         """
         Generate E, N, W, S adjacencies.
         """
@@ -61,10 +61,10 @@ class VectorTuple(tuple):
             VectorTuple(1, 0),
         ):
             next_pos = self + delta
-            if next_pos.within_range(range(board.shape[0]), range(board.shape[1])):
+            if next_pos.within_range(range(grid.shape[0]), range(grid.shape[1])):
                 yield next_pos
 
-    def diagonals(self, board):
+    def diagonals(self, grid):
         """
         Generate NE, NW, SW, SE adjacencies.
         """
@@ -75,10 +75,10 @@ class VectorTuple(tuple):
             VectorTuple(1, 1),
         ):
             next_pos = self + delta
-            if next_pos.within_range(range(board.shape[0]), range(board.shape[1])):
+            if next_pos.within_range(range(grid.shape[0]), range(grid.shape[1])):
                 yield next_pos
 
-    def radius(self, board, size):
+    def radius(self, grid, size):
         """
         Generate coordinates within a manhattan radius.
         """
@@ -90,8 +90,8 @@ class VectorTuple(tuple):
                 delta == VectorTuple(0, 0)
                 or delta.manhattan() > size
                 or not adjacency.within_range(
-                    range(board.shape[0]),
-                    range(board.shape[1]),
+                    range(grid.shape[0]),
+                    range(grid.shape[1]),
                 )
             ):
                 continue
