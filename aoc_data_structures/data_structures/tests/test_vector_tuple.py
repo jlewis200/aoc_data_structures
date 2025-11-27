@@ -234,3 +234,20 @@ class TestVectorTuple(unittest.TestCase):
             VectorTuple(1, -1),
         }
         self.assertEqual(actual, expected)
+
+    def test_adjacencies(self):
+        """
+        Ensure all adjacencies are generated.
+        """
+        actual = set(VectorTuple(0, 0).adjacencies(None))
+        expected = {
+            VectorTuple(-1, -1),
+            VectorTuple(-1, 1),
+            VectorTuple(1, 1),
+            VectorTuple(1, -1),
+            VectorTuple(-1, 0),
+            VectorTuple(1, 0),
+            VectorTuple(0, -1),
+            VectorTuple(0, 1),
+        }
+        self.assertEqual(actual, expected)
