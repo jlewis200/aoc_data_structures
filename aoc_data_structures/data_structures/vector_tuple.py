@@ -2,6 +2,8 @@
 Datastructures collection.
 """
 
+from itertools import product
+
 
 class VectorTuple(tuple):
     """
