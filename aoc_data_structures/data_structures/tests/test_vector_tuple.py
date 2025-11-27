@@ -12,6 +12,9 @@ class TestVectorTuple(unittest.TestCase):
     """
 
     def test_add(self):
+        """
+        Test element-wise addition.
+        """
         self.assertEqual(
             VectorTuple(1, 1) + VectorTuple(1, 2),
             VectorTuple(2, 3),

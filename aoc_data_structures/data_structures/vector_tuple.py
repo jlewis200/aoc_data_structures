@@ -45,6 +45,9 @@ class VectorTuple(tuple):
         )
 
     def within_range(self, *ranges):
+        """
+        Return true if all elements of the VectorTuple are within the provided ranges.
+        """
         return all(element in range_ for element, range_ in zip(self, ranges))
 
     def orthogonals(self, board):
