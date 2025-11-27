@@ -155,12 +155,10 @@ class TestVectorTuple(unittest.TestCase):
         Ensure orthogonal bounds are correct for array boundaries.
         """
         grid = np.full((20, 20), 0)
-        actual = set(VectorTuple(10, 10).orthogonals(grid))
+        actual = set(VectorTuple(0, 0).orthogonals(grid))
         expected = {
-            VectorTuple(10, 9),
-            VectorTuple(10, 11),
-            VectorTuple(9, 10),
-            VectorTuple(11, 10),
+            VectorTuple(1, 0),
+            VectorTuple(0, 1),
         }
         self.assertEqual(actual, expected)
 
@@ -169,11 +167,70 @@ class TestVectorTuple(unittest.TestCase):
         Ensure diagonals bounds are correct for array boundaries.
         """
         grid = np.full((20, 20), 0)
-        actual = set(VectorTuple(10, 10).diagonals(grid))
+        actual = set(VectorTuple(0, 0).diagonals(grid))
+        expected = {VectorTuple(1, 1)}
+        self.assertEqual(actual, expected)
+
+    def test_orthogonals_int_boundary(self):
+        """
+        Ensure orthogonal bounds are correct for int boundary.
+        """
+        actual = set(VectorTuple(0, 0).orthogonals(20))
         expected = {
-            VectorTuple(9, 9),
-            VectorTuple(9, 11),
-            VectorTuple(11, 9),
-            VectorTuple(11, 11),
+            VectorTuple(1, 0),
+            VectorTuple(0, 1),
+        }
+        self.assertEqual(actual, expected)
+
+    def test_diagonals_int_boundary(self):
+        """
+        Ensure diagonals bounds are correct for int boundaries.
+        """
+        actual = set(VectorTuple(0, 0).diagonals(20))
+        expected = {VectorTuple(1, 1)}
+        self.assertEqual(actual, expected)
+
+    def test_orthogonals_tuple_int_boundaries(self):
+        """
+        Ensure orthogonal bounds are correct for tuple(int, int) boundaries.
+        """
+        actual = set(VectorTuple(0, 0).orthogonals((20, 20)))
+        expected = {
+            VectorTuple(1, 0),
+            VectorTuple(0, 1),
+        }
+        self.assertEqual(actual, expected)
+
+    def test_diagonals_tuple_int_boundaries(self):
+        """
+        Ensure diagonals bounds are correct for tuple(int, int) boundaries.
+        """
+        actual = set(VectorTuple(0, 0).diagonals((20, 20)))
+        expected = {VectorTuple(1, 1)}
+        self.assertEqual(actual, expected)
+
+    def test_orthogonals_tuple_none_boundary(self):
+        """
+        Ensure orthogonal bounds are correct for None boundaries.
+        """
+        actual = set(VectorTuple(0, 0).orthogonals(None))
+        expected = {
+            VectorTuple(-1, 0),
+            VectorTuple(1, 0),
+            VectorTuple(0, -1),
+            VectorTuple(0, 1),
+        }
+        self.assertEqual(actual, expected)
+
+    def test_diagonals_tuple_none_boundary(self):
+        """
+        Ensure diagonals bounds are correct for None boundaries.
+        """
+        actual = set(VectorTuple(0, 0).diagonals(None))
+        expected = {
+            VectorTuple(-1, -1),
+            VectorTuple(-1, 1),
+            VectorTuple(1, 1),
+            VectorTuple(1, -1),
         }
         self.assertEqual(actual, expected)
