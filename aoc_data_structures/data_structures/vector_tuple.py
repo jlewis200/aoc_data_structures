@@ -2,6 +2,8 @@
 Datastructures collection.
 """
 
+from itertools import product
+
 
 class VectorTuple(tuple):
     """
@@ -44,13 +46,16 @@ class VectorTuple(tuple):
             for self_element, other_element in zip(self, other)
         )
 
+    def __abs__(self):
+        return VectorTuple((abs(element) for element in self))
+
     def within_range(self, *ranges):
         """
         Return true if all elements of the VectorTuple are within the provided ranges.
         """
         return all(element in range_ for element, range_ in zip(self, ranges))
 
-    def orthogonals(self, board):
+    def orthogonals(self, grid):
         """
         Generate E, N, W, S adjacencies.
         """
@@ -61,10 +66,10 @@ class VectorTuple(tuple):
             VectorTuple(1, 0),
         ):
             next_pos = self + delta
-            if next_pos.within_range(range(board.shape[0]), range(board.shape[1])):
+            if next_pos.within_range(range(grid.shape[0]), range(grid.shape[1])):
                 yield next_pos
 
-    def diagonals(self, board):
+    def diagonals(self, grid):
         """
         Generate NE, NW, SW, SE adjacencies.
         """
@@ -75,5 +80,31 @@ class VectorTuple(tuple):
             VectorTuple(1, 1),
         ):
             next_pos = self + delta
-            if next_pos.within_range(range(board.shape[0]), range(board.shape[1])):
+            if next_pos.within_range(range(grid.shape[0]), range(grid.shape[1])):
                 yield next_pos
+
+    def radius(self, grid, size):
+        """
+        Generate coordinates within a manhattan radius.
+        """
+        for dx, dy in product(range(-size, size + 1), repeat=2):
+            delta = VectorTuple(dy, dx)
+            adjacency = self + delta
+
+            if (
+                delta == VectorTuple(0, 0)
+                or delta.manhattan() > size
+                or not adjacency.within_range(
+                    range(grid.shape[0]),
+                    range(grid.shape[1]),
+                )
+            ):
+                continue
+
+            yield adjacency
+
+    def manhattan(self):
+        """
+        Get manhattan magnitude of self.
+        """
+        return sum(abs(self))
