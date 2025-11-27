@@ -149,3 +149,31 @@ class TestVectorTuple(unittest.TestCase):
             VectorTuple(18, 18),
         }
         self.assertEqual(actual, expected)
+
+    def test_orthogonals_array_boundaries(self):
+        """
+        Ensure orthogonal bounds are correct for array boundaries.
+        """
+        grid = np.full((20, 20), 0)
+        actual = set(VectorTuple(10, 10).orthogonals(grid))
+        expected = {
+            VectorTuple(10, 9),
+            VectorTuple(10, 11),
+            VectorTuple(9, 10),
+            VectorTuple(11, 10),
+        }
+        self.assertEqual(actual, expected)
+
+    def test_diagonals_array_boundaries(self):
+        """
+        Ensure diagonals bounds are correct for array boundaries.
+        """
+        grid = np.full((20, 20), 0)
+        actual = set(VectorTuple(10, 10).diagonals(grid))
+        expected = {
+            VectorTuple(9, 9),
+            VectorTuple(9, 11),
+            VectorTuple(11, 9),
+            VectorTuple(11, 11),
+        }
+        self.assertEqual(actual, expected)
