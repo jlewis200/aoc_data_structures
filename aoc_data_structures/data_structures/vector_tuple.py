@@ -3,6 +3,7 @@ Datastructures collection.
 """
 
 from itertools import product
+import numpy as np
 
 
 class VectorTuple(tuple):
@@ -55,10 +56,26 @@ class VectorTuple(tuple):
         """
         return all(element in range_ for element, range_ in zip(self, ranges))
 
-    def orthogonals(self, grid):
+    @staticmethod
+    def _get_ranges(bounds):
+        if bounds is None:
+            return None, None
+        if isinstance(bounds, np.ndarray):
+            return range(bounds.shape[0]), range(bounds.shape[1])
+        if isinstance(bounds, int):
+            return range(bounds), range(bounds)
+        if isinstance(bounds, tuple) and len(bounds) == 2:
+            if all(map(lambda x: isinstance(x, int), bounds)):
+                return range(bounds[0]), range(bounds[1])
+        raise AssertionError(
+            "'bounds' must be one of:  None, np.ndarray, int, tuple(int, int)"
+        )
+
+    def orthogonals(self, bounds):
         """
         Generate E, N, W, S adjacencies.
         """
+        vertical_range, horizontal_range = self._get_ranges(bounds)
         for delta in (
             VectorTuple(0, 1),
             VectorTuple(-1, 0),
@@ -66,13 +83,16 @@ class VectorTuple(tuple):
             VectorTuple(1, 0),
         ):
             next_pos = self + delta
-            if next_pos.within_range(range(grid.shape[0]), range(grid.shape[1])):
+            if bounds is None:
+                yield next_pos
+            elif next_pos.within_range(vertical_range, horizontal_range):
                 yield next_pos
 
-    def diagonals(self, grid):
+    def diagonals(self, bounds):
         """
         Generate NE, NW, SW, SE adjacencies.
         """
+        vertical_range, horizontal_range = self._get_ranges(bounds)
         for delta in (
             VectorTuple(-1, 1),
             VectorTuple(-1, -1),
@@ -80,7 +100,9 @@ class VectorTuple(tuple):
             VectorTuple(1, 1),
         ):
             next_pos = self + delta
-            if next_pos.within_range(range(grid.shape[0]), range(grid.shape[1])):
+            if bounds is None:
+                yield next_pos
+            elif next_pos.within_range(vertical_range, horizontal_range):
                 yield next_pos
 
     def radius(self, grid, size):
