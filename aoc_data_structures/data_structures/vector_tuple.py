@@ -2,7 +2,7 @@
 Datastructures collection.
 """
 
-from itertools import product
+from itertools import product, chain
 import numpy as np
 
 
@@ -104,6 +104,12 @@ class VectorTuple(tuple):
                 yield next_pos
             elif next_pos.within_range(vertical_range, horizontal_range):
                 yield next_pos
+
+    def adjacencies(self, bounds):
+        """
+        Generate orthogonal and diagonal adjacencies.
+        """
+        yield from chain(self.orthogonals(bounds), self.diagonals(bounds))
 
     def radius(self, grid, size):
         """
