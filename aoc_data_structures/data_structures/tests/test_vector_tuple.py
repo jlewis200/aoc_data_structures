@@ -21,7 +21,13 @@ class TestVectorTuple(unittest.TestCase):
             VectorTuple(2, 3),
         )
 
-    def test_manhattan_0(self):
+
+class TestManhattan(unittest.TestCase):
+    """
+    Test the manhattan() method of VectorTuple.
+    """
+
+    def test_0(self):
         """
         Test manhattan() method with magnitude 0.
         """
@@ -30,7 +36,7 @@ class TestVectorTuple(unittest.TestCase):
             0,
         )
 
-    def test_manhattan_negative(self):
+    def test_negative(self):
         """
         Test manhattan() method with negative values.
         """
@@ -39,7 +45,7 @@ class TestVectorTuple(unittest.TestCase):
             4,
         )
 
-    def test_manhattan_positive(self):
+    def test_positive(self):
         """
         Test manhattan() method with positive values.
         """
@@ -48,7 +54,7 @@ class TestVectorTuple(unittest.TestCase):
             4,
         )
 
-    def test_manhattan_mixed_sign(self):
+    def test_mixed_sign(self):
         """
         Test manhattan() method with positive and negative values.
         """
@@ -57,7 +63,13 @@ class TestVectorTuple(unittest.TestCase):
             4,
         )
 
-    def test_radius_0(self):
+
+class TestRadius(unittest.TestCase):
+    """
+    Test the radius() method of VectorTuple.
+    """
+
+    def test_0(self):
         """
         Ensure radius of size 0 yields an empty set of coordinates.
         """
@@ -68,7 +80,7 @@ class TestVectorTuple(unittest.TestCase):
             set(),
         )
 
-    def test_radius_2(self):
+    def test_2(self):
         """
         Ensure radius of size 2 yields appropriate coordinates.
         """
@@ -90,7 +102,7 @@ class TestVectorTuple(unittest.TestCase):
         }
         self.assertEqual(actual, expected)
 
-    def test_radius_nw_corner(self):
+    def test_nw_corner(self):
         """
         Ensure radius at north-west corner of grid is truncated.
         """
@@ -105,7 +117,7 @@ class TestVectorTuple(unittest.TestCase):
         }
         self.assertEqual(actual, expected)
 
-    def test_radius_ne_corner(self):
+    def test_ne_corner(self):
         """
         Ensure radius at north-east corner of grid is truncated.
         """
@@ -120,7 +132,7 @@ class TestVectorTuple(unittest.TestCase):
         }
         self.assertEqual(actual, expected)
 
-    def test_radius_sw_corner(self):
+    def test_sw_corner(self):
         """
         Ensure radius at south-west corner of grid is truncated.
         """
@@ -135,7 +147,7 @@ class TestVectorTuple(unittest.TestCase):
         }
         self.assertEqual(actual, expected)
 
-    def test_radius_se_corner(self):
+    def test_se_corner(self):
         """
         Ensure radius at south-east corner of grid is truncated.
         """
@@ -150,7 +162,13 @@ class TestVectorTuple(unittest.TestCase):
         }
         self.assertEqual(actual, expected)
 
-    def test_orthogonals_array_boundaries(self):
+
+class TestOrthogonals(unittest.TestCase):
+    """
+    Test the orthogonals() method of VectorTuple.
+    """
+
+    def test_array_boundaries(self):
         """
         Ensure orthogonal bounds are correct for array boundaries.
         """
@@ -162,16 +180,7 @@ class TestVectorTuple(unittest.TestCase):
         }
         self.assertEqual(actual, expected)
 
-    def test_diagonals_array_boundaries(self):
-        """
-        Ensure diagonals bounds are correct for array boundaries.
-        """
-        grid = np.full((20, 20), 0)
-        actual = set(VectorTuple(0, 0).diagonals(grid))
-        expected = {VectorTuple(1, 1)}
-        self.assertEqual(actual, expected)
-
-    def test_orthogonals_int_boundary(self):
+    def test_int_boundary(self):
         """
         Ensure orthogonal bounds are correct for int boundary.
         """
@@ -182,15 +191,7 @@ class TestVectorTuple(unittest.TestCase):
         }
         self.assertEqual(actual, expected)
 
-    def test_diagonals_int_boundary(self):
-        """
-        Ensure diagonals bounds are correct for int boundaries.
-        """
-        actual = set(VectorTuple(0, 0).diagonals(20))
-        expected = {VectorTuple(1, 1)}
-        self.assertEqual(actual, expected)
-
-    def test_orthogonals_tuple_int_boundaries(self):
+    def test_tuple_int_boundaries(self):
         """
         Ensure orthogonal bounds are correct for tuple(int, int) boundaries.
         """
@@ -201,15 +202,7 @@ class TestVectorTuple(unittest.TestCase):
         }
         self.assertEqual(actual, expected)
 
-    def test_diagonals_tuple_int_boundaries(self):
-        """
-        Ensure diagonals bounds are correct for tuple(int, int) boundaries.
-        """
-        actual = set(VectorTuple(0, 0).diagonals((20, 20)))
-        expected = {VectorTuple(1, 1)}
-        self.assertEqual(actual, expected)
-
-    def test_orthogonals_tuple_none_boundary(self):
+    def test_none_boundary(self):
         """
         Ensure orthogonal bounds are correct for None boundaries.
         """
@@ -222,7 +215,53 @@ class TestVectorTuple(unittest.TestCase):
         }
         self.assertEqual(actual, expected)
 
-    def test_diagonals_tuple_none_boundary(self):
+    def test_3_dimensional(self):
+        """
+        Ensure 3 dimensional orthogonals are generated properly.
+        """
+        actual = set(VectorTuple(0, 0, 0).orthogonals(None))
+        expected = {
+            VectorTuple(0, 0, -1),
+            VectorTuple(0, 0, 1),
+            VectorTuple(0, -1, 0),
+            VectorTuple(0, 1, 0),
+            VectorTuple(-1, 0, 0),
+            VectorTuple(1, 0, 0),
+        }
+        self.assertEqual(actual, expected)
+
+
+class TestDiagonals(unittest.TestCase):
+    """
+    Test the diagonals() method of VectorTuple.
+    """
+
+    def test_array_boundaries(self):
+        """
+        Ensure diagonals bounds are correct for array boundaries.
+        """
+        grid = np.full((20, 20), 0)
+        actual = set(VectorTuple(0, 0).diagonals(grid))
+        expected = {VectorTuple(1, 1)}
+        self.assertEqual(actual, expected)
+
+    def test_int_boundary(self):
+        """
+        Ensure diagonals bounds are correct for int boundaries.
+        """
+        actual = set(VectorTuple(0, 0).diagonals(20))
+        expected = {VectorTuple(1, 1)}
+        self.assertEqual(actual, expected)
+
+    def test_tuple_int_boundaries(self):
+        """
+        Ensure diagonals bounds are correct for tuple(int, int) boundaries.
+        """
+        actual = set(VectorTuple(0, 0).diagonals((20, 20)))
+        expected = {VectorTuple(1, 1)}
+        self.assertEqual(actual, expected)
+
+    def test_none_boundary(self):
         """
         Ensure diagonals bounds are correct for None boundaries.
         """
@@ -234,3 +273,96 @@ class TestVectorTuple(unittest.TestCase):
             VectorTuple(1, -1),
         }
         self.assertEqual(actual, expected)
+
+    def test_3_dimensional(self):
+        """
+        Ensure 3 dimensional orthogonals are generated properly.
+        """
+        actual = set(VectorTuple(0, 0, 0).diagonals(None))
+        expected = {
+            VectorTuple(-1, -1, -1),
+            VectorTuple(-1, -1, 1),
+            VectorTuple(-1, 1, -1),
+            VectorTuple(-1, 1, 1),
+            VectorTuple(1, -1, -1),
+            VectorTuple(1, -1, 1),
+            VectorTuple(1, 1, -1),
+            VectorTuple(1, 1, 1),
+        }
+        self.assertEqual(actual, expected)
+
+
+class TestAdjacencies(unittest.TestCase):
+    """
+    Test the adjacencies() method of VectorTuple.
+    """
+
+    def test_adjacencies(self):
+        """
+        Ensure all adjacencies are generated.
+        """
+        actual = set(VectorTuple(0, 0).adjacencies(None))
+        expected = {
+            VectorTuple(-1, -1),
+            VectorTuple(-1, 1),
+            VectorTuple(1, 1),
+            VectorTuple(1, -1),
+            VectorTuple(-1, 0),
+            VectorTuple(1, 0),
+            VectorTuple(0, -1),
+            VectorTuple(0, 1),
+        }
+        self.assertEqual(actual, expected)
+
+    def test_adjacencies_3_dimensional(self):
+        """
+        Ensure 3 dimensional adjacencies are generated properly.
+        """
+        actual = set(VectorTuple(0, 0, 0).adjacencies(None))
+        expected = {
+            (0, -1, -1),
+            (-1, 1, -1),
+            (0, -1, 1),
+            (0, 1, 0),
+            (-1, 1, 1),
+            (1, -1, 1),
+            (1, -1, -1),
+            (0, 0, -1),
+            (0, 0, 1),
+            (1, 0, 1),
+            (1, 1, 0),
+            (1, 0, -1),
+            (-1, -1, -1),
+            (0, -1, 0),
+            (-1, -1, 1),
+            (-1, 1, 0),
+            (1, -1, 0),
+            (-1, 0, 1),
+            (-1, 0, -1),
+            (1, 0, 0),
+            (-1, -1, 0),
+            (0, 1, -1),
+            (0, 1, 1),
+            (-1, 0, 0),
+            (1, 1, -1),
+            (1, 1, 1),
+        }
+        self.assertEqual(actual, expected)
+
+
+class TestValid(unittest.TestCase):
+    """
+    Test the valid() method of VecotrTuple.
+    """
+
+    def test_grid_within_bounds(self):
+        """
+        Ensure a tuple within a grid bound returns True.
+        """
+        self.assertTrue(VectorTuple(0, 0).valid(np.full((20, 20), 0)))
+
+    def test_grid_outside_bounds(self):
+        """
+        Ensure a tuple outside a grid bound returns False.
+        """
+        self.assertFalse(VectorTuple(-1, 0).valid(np.full((20, 20), 0)))
