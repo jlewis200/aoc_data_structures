@@ -185,7 +185,9 @@ class VectorTuple(tuple):
 
     def adjacencies(self, bounds):
         """
-        Generate square/cube/hyper-cube adjacencies.
+        Generate square/cube/hyper-cube adjacencies.  If the current/self
+        VectorTuple represents the central core of a rubik's cube, this
+        yields the 26 other elements of the cube:  faces/edges/corners.
         """
         ranges = self._get_ranges(bounds)
         for delta_combination in product(
