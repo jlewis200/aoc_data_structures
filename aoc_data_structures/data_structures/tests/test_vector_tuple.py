@@ -348,3 +348,21 @@ class TestAdjacencies(unittest.TestCase):
             (1, 1, 1),
         }
         self.assertEqual(actual, expected)
+
+
+class TestValid(unittest.TestCase):
+    """
+    Test the valid() method of VecotrTuple.
+    """
+
+    def test_grid_within_bounds(self):
+        """
+        Ensure a tuple within a grid bound returns True.
+        """
+        self.assertTrue(VectorTuple(0, 0).valid(np.full((20, 20), 0)))
+
+    def test_grid_outside_bounds(self):
+        """
+        Ensure a tuple outside a grid bound returns False.
+        """
+        self.assertFalse(VectorTuple(-1, 0).valid(np.full((20, 20), 0)))
