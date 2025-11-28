@@ -65,12 +65,12 @@ class VectorTuple(tuple):
         """
         return all(element in range_ for element, range_ in zip(self, ranges))
 
-    def valid_coord(self, bounds):
+    def valid(self, bounds):
         """
         Validate if the coord is within provided bounds.
         """
         ranges = self._get_ranges(bounds)
-        return self.within_range(ranges)
+        return self.within_range(*ranges)
 
     def _get_ranges(self, bounds):
         if bounds is None:
